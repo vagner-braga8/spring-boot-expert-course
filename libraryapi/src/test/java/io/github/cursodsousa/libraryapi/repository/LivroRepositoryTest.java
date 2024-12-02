@@ -60,4 +60,27 @@ class LivroRepositoryTest {
         repository.save(livro);
     }
 
+    @Test
+    public void salvarAutorELivroSemCascadeTest(){
+        Livro livro = new Livro();
+        livro.setIsbn("00000-02");
+        livro.setPreco(BigDecimal.valueOf(100));
+        livro.setGenero(GeneroLivro.MISTERIO);
+        livro.setTitulo("BTC II");
+        livro.setDataPublicacao(LocalDate.of(2008,10,31));
+
+
+        Autor autor = new Autor();
+        autor.setNome("Putin");
+        autor.setDataNascimento(LocalDate.of(1965,1,20));
+        autor.setNacionalidade("Russa");
+
+        autorRepository.save(autor);
+
+        livro.setAutor(autor);
+
+        repository.save(livro);
+    }
+
+
 }

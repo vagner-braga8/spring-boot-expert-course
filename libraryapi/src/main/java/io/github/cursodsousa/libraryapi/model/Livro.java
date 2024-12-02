@@ -32,7 +32,7 @@ public class Livro {
     @Column(precision = 18, scale = 2)
     private BigDecimal preco;
 
-    @ManyToOne(cascade = CascadeType.ALL) //'Many' entidade atual, 'one' entidade relacionada
+    @ManyToOne//(cascade = CascadeType.ALL)*Exemplo na classe de test //'Many' entidade atual, 'one' entidade relacionada
     @JoinColumn(name = "id_autor")
     private Autor autor;
 }
