@@ -39,4 +39,25 @@ class LivroRepositoryTest {
         repository.save(livro);
     }
 
+
+    @Test
+    public void salvarCascadeTest(){
+        Livro livro = new Livro();
+        livro.setIsbn("00000-01");
+        livro.setPreco(BigDecimal.valueOf(100));
+        livro.setGenero(GeneroLivro.MISTERIO);
+        livro.setTitulo("BTC");
+        livro.setDataPublicacao(LocalDate.of(2008,10,31));
+
+
+        Autor autor = new Autor();
+        autor.setNome("Satoshi Nakamoto");
+        autor.setDataNascimento(LocalDate.of(1945,1,20));
+        autor.setNacionalidade("Matrix");
+
+        livro.setAutor(autor);
+
+        repository.save(livro);
+    }
+
 }
