@@ -38,7 +38,7 @@ public class DataBaseConfiguration {
     public DataSource hikariDataSource(){
 
         HikariConfig config = new HikariConfig(); //recomendado *por default é utilizado o hikari
-        
+
         config.setJdbcUrl(url);
         config.setUsername(username);
         config.setPassword(password);
