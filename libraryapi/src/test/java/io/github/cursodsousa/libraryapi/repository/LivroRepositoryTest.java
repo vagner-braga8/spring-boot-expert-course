@@ -7,6 +7,7 @@ import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -94,5 +95,17 @@ class LivroRepositoryTest {
 
         repository.save(livroParaAtualizar);
     }
+
+    @Test
+    @Transactional //Abrir a transação para carregar os dados a mais que precisar. (Atributos de relacionamento com FetchType.LAZY
+    public void buscarLivroTest(){
+        UUID id = UUID.fromString("c1f82f71-a71a-48c0-ae81-a0f2f7ef6d00");
+        var livro = repository.findById(id).orElse(null);
+        System.out.println("Livro: " + livro.getTitulo());
+
+        //Se usar o fetch = FetchType.LAZY no atributo autor do relacionamento em livro, para trazer é necessário usar o @Transactional
+        System.out.println("Autor: " + livro.getAutor().getNome());
+    }
+
 
 }
