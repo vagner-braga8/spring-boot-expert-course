@@ -126,4 +126,27 @@ class LivroRepositoryTest {
         livroList.forEach(System.out::println);
     }
 
+    @Test
+    void listarLivrosPorDataInicioEDataFim(){
+        List<Livro> livroList = repository.findByDataPublicacaoBetween(LocalDate.of(2008,10,31), LocalDate.of(2008,11,10));
+        livroList.forEach(System.out::println);
+    }
+
+    @Test
+    void listarTodos(){
+        List<Livro> livroList = repository.listarTodosOrdenadoPorTituloAndPreco();
+        livroList.forEach(System.out::println);
+    }
+
+    @Test
+    void listarAutoresDosLivros(){
+        List<Autor> autorList = repository.listarAutoresDosLivros();
+        autorList.forEach(System.out::println);
+    }
+
+    @Test
+    void listarGenerosDeLivrosAutoresBrasileiros(){
+        var resultado = repository.listarGenerosAutoresBrasileros();
+        resultado.forEach(System.out::println);
+    }
 }
