@@ -1,11 +1,15 @@
 package io.github.cursodsousa.libraryapi.repository;
 
 import io.github.cursodsousa.libraryapi.model.Autor;
+import io.github.cursodsousa.libraryapi.model.GeneroLivro;
+import io.github.cursodsousa.libraryapi.model.Livro;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,6 +19,9 @@ public class AutorRepositoryTest {
 
     @Autowired
     AutorRepository repository;
+
+    @Autowired
+    LivroRepository livroRepository;
 
     @Test
     public void salvarTest(){
@@ -72,6 +79,38 @@ public class AutorRepositoryTest {
         var autor = repository.findById(id).get();
         repository.delete(autor);
         System.out.println("Usuário deletado com sucesso!");
+    }
+
+    @Test
+    void salvarAutorComLivrosTest(){
+        Autor autor = new Autor();
+        autor.setNome("Jhon T.");
+        autor.setDataNascimento(LocalDate.of(1979,6,21));
+        autor.setNacionalidade("Americano");
+
+        Livro livroCleanCode = new Livro();
+        livroCleanCode.setIsbn("22222-01");
+        livroCleanCode.setPreco(BigDecimal.valueOf(283));
+        livroCleanCode.setGenero(GeneroLivro.CIENCIA);
+        livroCleanCode.setTitulo("Clean Code");
+        livroCleanCode.setDataPublicacao(LocalDate.of(2004,10,7));
+        livroCleanCode.setAutor(autor);
+
+        Livro livroThePragmaticProgrammer = new Livro();
+        livroThePragmaticProgrammer.setIsbn("33333-01");
+        livroThePragmaticProgrammer.setPreco(BigDecimal.valueOf(417));
+        livroThePragmaticProgrammer.setGenero(GeneroLivro.CIENCIA);
+        livroThePragmaticProgrammer.setTitulo("The Pragmatic Programmer");
+        livroThePragmaticProgrammer.setDataPublicacao(LocalDate.of(2010,10,31));
+        livroThePragmaticProgrammer.setAutor(autor);
+
+        autor.setLivros(new ArrayList<>());
+        autor.getLivros().add(livroCleanCode);
+        autor.getLivros().add(livroThePragmaticProgrammer);
+
+        repository.save(autor);
+        //livroRepository.saveAll(autor.getLivros());   *Se não usar o 'CASCADE' na hora de atribuir LIVRO ao AUTOR
+
     }
 
 }
