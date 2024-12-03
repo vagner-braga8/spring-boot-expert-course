@@ -6,6 +6,7 @@ import io.github.cursodsousa.libraryapi.model.Livro;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -111,6 +112,17 @@ public class AutorRepositoryTest {
         repository.save(autor);
         //livroRepository.saveAll(autor.getLivros());   *Se não usar o 'CASCADE' na hora de atribuir LIVRO ao AUTOR
 
+    }
+
+    @Test
+    void listarLivrosAutor(){
+        var id = UUID.fromString("2eb38d6a-9b11-407a-9e34-2cba1f61afeb");
+        var autor = repository.findById(id).get();
+
+        List<Livro> livroList = livroRepository.findByAutor(autor);
+        autor.setLivros(livroList);
+
+        autor.getLivros().forEach(System.out::println);
     }
 
 }
