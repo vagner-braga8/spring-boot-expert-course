@@ -149,4 +149,17 @@ class LivroRepositoryTest {
         var resultado = repository.listarGenerosAutoresBrasileros();
         resultado.forEach(System.out::println);
     }
+
+    @Test
+    void listarPorGeneroQueryParam(){
+        List<Livro> livroList = repository.buscarPorGenero(GeneroLivro.CIENCIA, "preco");
+        livroList.forEach(System.out::println);
+    }
+
+    @Test
+    void listarPorGeneroQueryParamPositionalParameters(){
+        List<Livro> livroList = repository.buscarPorGeneroPositionalParameters(GeneroLivro.CIENCIA, "preco");
+        livroList.forEach(System.out::println);
+    }
+
 }
