@@ -3,7 +3,6 @@ package io.github.cursodsousa.libraryapi.repository;
 import io.github.cursodsousa.libraryapi.model.Autor;
 import io.github.cursodsousa.libraryapi.model.GeneroLivro;
 import io.github.cursodsousa.libraryapi.model.Livro;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,11 +25,11 @@ class LivroRepositoryTest {
     @Test
     public void salvarTest(){
         Livro livro = new Livro();
-        livro.setIsbn("90845-11");
-        livro.setPreco(BigDecimal.valueOf(100));
-        livro.setGenero(GeneroLivro.FICCAO);
-        livro.setTitulo("UFO");
-        livro.setDataPublicacao(LocalDate.of(1980,1,2));
+        livro.setIsbn("33845-31");
+        livro.setPreco(BigDecimal.valueOf(54));
+        livro.setGenero(GeneroLivro.BIOGRAFIA);
+        livro.setTitulo("Pelé");
+        livro.setDataPublicacao(LocalDate.of(2023,1,17));
 
         Autor autor = autorRepository
                 .findById(UUID.fromString("3e567a27-6966-4032-9d4f-6cde838a390e")).
@@ -160,6 +159,16 @@ class LivroRepositoryTest {
     void listarPorGeneroQueryParamPositionalParameters(){
         List<Livro> livroList = repository.buscarPorGeneroPositionalParameters(GeneroLivro.CIENCIA, "preco");
         livroList.forEach(System.out::println);
+    }
+
+    @Test
+    void deletePorGenero(){
+        repository.deleteByGenero(GeneroLivro.BIOGRAFIA);
+    }
+
+    @Test
+    void updateDataPublicacao(){
+        repository.updateDataPublicacao(LocalDate.of(2010,7,25), "BTC");
     }
 
 }
