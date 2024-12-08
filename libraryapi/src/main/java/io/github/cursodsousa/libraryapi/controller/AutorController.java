@@ -39,10 +39,10 @@ public class AutorController {
     @GetMapping("{id}")
     public ResponseEntity<AutorDTO> obterDetalhes(@PathVariable("id") String id) {
         var idAutor = UUID.fromString(id);
-        Optional<Autor> optionalAutor = autorService.obterPorId(idAutor);
+        Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
 
-        if(optionalAutor.isPresent()){
-            Autor autorEntidade = optionalAutor.get(); //Recebendo a entidade que está dentro do Optional
+        if(autorOptional.isPresent()){
+            Autor autorEntidade = autorOptional.get(); //Recebendo a entidade que está dentro do Optional
             AutorDTO autorDTO = new AutorDTO(
                     autorEntidade.getId(),
                     autorEntidade.getNome(),
@@ -51,6 +51,18 @@ public class AutorController {
             return ResponseEntity.ok(autorDTO);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deletarPorId(@PathVariable("id") String id) {
+        var idAutor = UUID.fromString(id);
+        Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
+
+        if(autorOptional.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        autorService.deletar(autorOptional.get());
+        return ResponseEntity.noContent().build();
     }
 
 }
