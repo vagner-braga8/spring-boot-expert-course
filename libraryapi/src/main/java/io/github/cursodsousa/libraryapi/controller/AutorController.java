@@ -1,6 +1,7 @@
 package io.github.cursodsousa.libraryapi.controller;
 
 import io.github.cursodsousa.libraryapi.controller.dto.AutorDTO;
+import io.github.cursodsousa.libraryapi.controller.dto.ErroResposta;
 import io.github.cursodsousa.libraryapi.model.Autor;
 import io.github.cursodsousa.libraryapi.service.AutorService;
 
@@ -44,7 +45,7 @@ public class AutorController {
         Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
 
         if(autorOptional.isPresent()){
-            Autor autorEntidade = autorOptional.get(); //Recebendo a entidade que está dentro do Optional
+            Autor autorEntidade = autorOptional.get();
             AutorDTO autorDTO = new AutorDTO(
                     autorEntidade.getId(),
                     autorEntidade.getNome(),
@@ -69,7 +70,6 @@ public class AutorController {
 
     @GetMapping
     public ResponseEntity<List<AutorDTO>> pesquisar(
-            //required = false , não é obrigatório a passagem do parâmetro.
             @RequestParam(value = "nome", required = false) String nome,
             @RequestParam(value = "nacionalidade", required = false) String nacionalidade) {
 
