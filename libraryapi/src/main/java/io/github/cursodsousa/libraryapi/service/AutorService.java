@@ -4,6 +4,7 @@ import io.github.cursodsousa.libraryapi.model.Autor;
 import io.github.cursodsousa.libraryapi.repository.AutorRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,4 +28,9 @@ public class AutorService {
     public void deletar(Autor autor) {
         autorRepository.delete(autor);
     }
+
+    public List<Autor> pesquisa(String nome, String nacionalidade) {
+        return autorRepository.pesquisar(nome, nacionalidade);
+    }
+
 }
