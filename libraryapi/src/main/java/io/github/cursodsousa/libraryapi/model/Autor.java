@@ -18,7 +18,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString(exclude = "livros" )
-@EntityListeners(AuditingEntityListener.class) //
+@EntityListeners(AuditingEntityListener.class)
 public class Autor {
 
     @Id
