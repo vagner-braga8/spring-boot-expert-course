@@ -1,7 +1,6 @@
 package io.github.cursodsousa.libraryapi.controller.dto;
 
 import io.github.cursodsousa.libraryapi.model.GeneroLivro;
-import io.github.cursodsousa.libraryapi.model.Livro;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;

@@ -2,6 +2,7 @@ package io.github.cursodsousa.libraryapi.controller;
 
 import io.github.cursodsousa.libraryapi.controller.dto.CadastroLivroDTO;
 import io.github.cursodsousa.libraryapi.controller.dto.ErroResposta;
+import io.github.cursodsousa.libraryapi.controller.mappers.LivroMapper;
 import io.github.cursodsousa.libraryapi.exceptions.RegistroDuplicadoException;
 import io.github.cursodsousa.libraryapi.model.Livro;
 import io.github.cursodsousa.libraryapi.service.LivroService;
@@ -18,16 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LivroController {
 
-    private LivroService livroService;
+    private final LivroService livroService;
+    private final LivroMapper livroMapper;
 
     @PostMapping
     public ResponseEntity<Object> salvar(@RequestBody @Valid CadastroLivroDTO cadastroLivroDTO) {
         try {
-            // Mapear dto para entidade
-            //enviar a enteidade para o service validar e salvar
+            Livro livro = livroMapper.toEntity(cadastroLivroDTO);
+            livroService.salvar(livro);
             //criar url para acesso dos dados do livro
             //retornar codigo created com header location
-            return ResponseEntity.ok(cadastroLivroDTO);
+            return ResponseEntity.ok(livro.getId());
         }catch (RegistroDuplicadoException e) {
             var erroDTO = ErroResposta.conflito(e.getMessage());
             return ResponseEntity.status(erroDTO.status()).body(erroDTO);
