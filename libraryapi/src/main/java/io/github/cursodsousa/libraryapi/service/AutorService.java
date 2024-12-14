@@ -41,7 +41,8 @@ public class AutorService {
 
     public void deletar(Autor autor) {
         if(possuiLivro(autor)){
-            throw new OperacaoNaoPermitidaException("Não é permitido um excluir autor que possui livros cadastrados!");
+            throw new OperacaoNaoPermitidaException("Não é permitido um excluir autor que possui " +
+                    " cadastrados!");
         }
         autorRepository.delete(autor);
     }
