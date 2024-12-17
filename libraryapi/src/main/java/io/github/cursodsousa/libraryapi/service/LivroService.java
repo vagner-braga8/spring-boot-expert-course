@@ -54,11 +54,13 @@ public class LivroService {
             specs = specs.and(LivroSpecs.nomeAutorLike(nomeAutor));
         }
 
-        List<Livro> all = livroRepository.findAll(specs);
-        for (Livro livro : all) {
-            System.out.println(livro.getAutor().getNome());
-        }
-
         return livroRepository.findAll(specs);
+    }
+
+    public void atualizar(Livro livro) {
+        if(livro.getId() == null) {
+            throw new IllegalArgumentException("Para atualizar, é necessário que o autor já esteja salvo na base.");
+        }
+        livroRepository.save(livro);
     }
 }
