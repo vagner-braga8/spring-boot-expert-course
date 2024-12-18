@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface LivroRepository extends JpaRepository<Livro, UUID> , JpaSpecificationExecutor<Livro> {
@@ -28,6 +29,8 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> , JpaSpecifi
     List<Livro> findByTituloOrPreco (String titulo, BigDecimal preco);
 
     List<Livro> findByDataPublicacaoBetween(LocalDate inicio, LocalDate fim);
+
+    Optional<Livro> findByIsbn(String isbn);
 
 
     // JPQL -> Referência as entidades e as propriedades

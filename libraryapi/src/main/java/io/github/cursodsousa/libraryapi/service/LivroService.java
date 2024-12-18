@@ -4,6 +4,7 @@ import io.github.cursodsousa.libraryapi.model.GeneroLivro;
 import io.github.cursodsousa.libraryapi.model.Livro;
 import io.github.cursodsousa.libraryapi.repository.LivroRepository;
 import io.github.cursodsousa.libraryapi.repository.specs.LivroSpecs;
+import io.github.cursodsousa.libraryapi.validator.LivroValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,11 @@ import java.util.UUID;
 public class LivroService {
 
     private final LivroRepository livroRepository;
+    private final LivroValidator livroValidator;
 
     public Livro salvar(Livro livro){
-       return livroRepository.save(livro);
+        livroValidator.validar(livro);
+        return livroRepository.save(livro);
     }
 
     public Optional<Livro> obterPorId(UUID id) {
@@ -61,6 +64,7 @@ public class LivroService {
         if(livro.getId() == null) {
             throw new IllegalArgumentException("Para atualizar, é necessário que o autor já esteja salvo na base.");
         }
+        livroValidator.validar(livro);
         livroRepository.save(livro);
     }
 }
