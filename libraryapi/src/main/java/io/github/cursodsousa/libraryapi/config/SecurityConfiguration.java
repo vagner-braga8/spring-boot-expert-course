@@ -2,6 +2,7 @@ package io.github.cursodsousa.libraryapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,7 +28,15 @@ public class SecurityConfiguration {
                     configurer.loginPage("/login").permitAll();
                 })
                 .authorizeHttpRequests(authorize -> {
-                    authorize.anyRequest().authenticated(); //Qualquer requisição para essa API precisa de autenticação
+                    // ----  Uma "role"(hasRole) pode contar várias "authority's(hasAuthority). Exemplo: hasAuthority("CADASTRAR_AUTOR")" ---- //
+//                    authorize.requestMatchers(HttpMethod.POST,"/autores/**").hasRole("ADMIN");
+//                    authorize.requestMatchers(HttpMethod.DELETE,"/autores/**").hasRole("ADMIN");
+//                    authorize.requestMatchers(HttpMethod.PUT,"/autores/**").hasRole("ADMIN");
+//                    authorize.requestMatchers(HttpMethod.GET,"/autores/**").hasAnyRole("USER", "ADMIN");
+
+                    authorize.requestMatchers("/autores/**").hasRole("ADMIN"); //Somente role do tipo 'ADMIN' terá permissão para qualquer coisa relacionada a autores
+                    authorize.requestMatchers("/livros/**").hasAnyRole("USER", "ADMIN");
+                    authorize.anyRequest().authenticated(); // 1- Sempre deixar por último nas declarações. Pois, o 'anyRequest' ignorará as próximas. / 2- Qualquer requisição para essa API precisa de autenticação
                 })
                 .build();
     }
