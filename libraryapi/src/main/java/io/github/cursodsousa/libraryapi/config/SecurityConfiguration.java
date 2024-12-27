@@ -1,5 +1,7 @@
 package io.github.cursodsousa.libraryapi.config;
 
+import io.github.cursodsousa.libraryapi.security.CustomUserDetailsService;
+import io.github.cursodsousa.libraryapi.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -42,21 +44,27 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder(10);
     }
 
+//    @Bean
+//    public UserDetailsService userDetailsService(PasswordEncoder encoder){
+//
+//        UserDetails user = User.builder()
+//                .username("user")
+//                .password(encoder.encode("111"))
+//                .roles("USER")
+//                .build();
+//
+//        UserDetails admin = User.builder()
+//                .username("admin")
+//                .password(encoder.encode("999"))
+//                .roles("ADMIN")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user, admin);
+//    }
+
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder){
-
-        UserDetails user = User.builder()
-                .username("user")
-                .password(encoder.encode("111"))
-                .roles("USER")
-                .build();
-
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(encoder.encode("999"))
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
+    public UserDetailsService userDetailsService(UsuarioService usuarioService){
+        return new CustomUserDetailsService(usuarioService);
     }
+
 }
