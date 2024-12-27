@@ -3,12 +3,17 @@ package io.github.cursodsousa.libraryapi.controller;
 import io.github.cursodsousa.libraryapi.controller.dto.AutorDTO;
 import io.github.cursodsousa.libraryapi.controller.mappers.AutorMapper;
 import io.github.cursodsousa.libraryapi.model.Autor;
+import io.github.cursodsousa.libraryapi.model.Usuario;
+import io.github.cursodsousa.libraryapi.security.SecurityService;
 import io.github.cursodsousa.libraryapi.service.AutorService;
 
+import io.github.cursodsousa.libraryapi.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -30,6 +35,7 @@ public class AutorController implements GenericController {
     public ResponseEntity<Void> salvar(@RequestBody @Valid AutorDTO autorDTO) {
         var autor = autorMapper.toEntity(autorDTO);
         autorService.salvar(autor);
+
         URI location = gerarHeaderLocation(autor.getId());
         return ResponseEntity.created(location).build();
     }
