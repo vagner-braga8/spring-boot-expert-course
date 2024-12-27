@@ -28,15 +28,17 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(configurer -> {
-                    configurer.loginPage("/login").permitAll();
-                })
+//                .formLogin(configurer -> {
+//                    configurer.loginPage("/login").permitAll();
+//                })
+                .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/login/**").permitAll();
                     authorize.requestMatchers(HttpMethod.POST,"/usuarios/**").permitAll();
 
                     authorize.anyRequest().authenticated(); // 1- Sempre deixar por último nas declarações. Pois, o 'anyRequest' ignorará as próximas. / 2- Qualquer requisição para essa API precisa de autenticação
                 })
+                .oauth2Login(Customizer.withDefaults())
                 .build();
     }
 
