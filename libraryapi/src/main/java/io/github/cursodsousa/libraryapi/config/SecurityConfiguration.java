@@ -28,12 +28,8 @@ public class SecurityConfiguration {
                     configurer.loginPage("/login").permitAll();
                 })
                 .authorizeHttpRequests(authorize -> {
-                    // ----  Uma "role"(hasRole) pode contar várias "authority's(hasAuthority). Exemplo: hasAuthority("CADASTRAR_AUTOR")" ---- //
-//                    authorize.requestMatchers(HttpMethod.POST,"/autores/**").hasRole("ADMIN");
-//                    authorize.requestMatchers(HttpMethod.DELETE,"/autores/**").hasRole("ADMIN");
-//                    authorize.requestMatchers(HttpMethod.PUT,"/autores/**").hasRole("ADMIN");
-//                    authorize.requestMatchers(HttpMethod.GET,"/autores/**").hasAnyRole("USER", "ADMIN");
-
+                    authorize.requestMatchers("/login/**").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST,"/usuarios/**").permitAll();
                     authorize.requestMatchers("/autores/**").hasRole("ADMIN"); //Somente role do tipo 'ADMIN' terá permissão para qualquer coisa relacionada a autores
                     authorize.requestMatchers("/livros/**").hasAnyRole("USER", "ADMIN");
                     authorize.anyRequest().authenticated(); // 1- Sempre deixar por último nas declarações. Pois, o 'anyRequest' ignorará as próximas. / 2- Qualquer requisição para essa API precisa de autenticação
