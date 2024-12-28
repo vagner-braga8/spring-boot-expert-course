@@ -1,6 +1,7 @@
 package io.github.cursodsousa.libraryapi.config;
 
 import io.github.cursodsousa.libraryapi.security.CustomUserDetailsService;
+import io.github.cursodsousa.libraryapi.security.LoginSocialSuccessHandler;
 import io.github.cursodsousa.libraryapi.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, LoginSocialSuccessHandler loginSocialSuccessHandler) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
@@ -39,7 +40,9 @@ public class SecurityConfiguration {
 
                     authorize.anyRequest().authenticated(); // 1- Sempre deixar por último nas declarações. Pois, o 'anyRequest' ignorará as próximas. / 2- Qualquer requisição para essa API precisa de autenticação
                 })
-                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(oauth2 -> {
+                    oauth2.successHandler(loginSocialSuccessHandler);//Ao logar com sucesso, acaba chamando tal classe.
+                })
                 .build();
     }
 
