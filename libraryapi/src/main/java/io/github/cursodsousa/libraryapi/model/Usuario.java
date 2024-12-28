@@ -23,6 +23,9 @@ public class Usuario {
     @Column
     private String senha;
 
+    @Column
+    private String email;
+
     @Type(ListArrayType.class) //Efetua a 'tradução' do campo de List para Array
     @Column(name = "roles", columnDefinition = "varchar[]")
     private List<String> roles;
