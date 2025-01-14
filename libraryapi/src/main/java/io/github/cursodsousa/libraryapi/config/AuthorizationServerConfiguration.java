@@ -30,7 +30,7 @@ public class AuthorizationServerConfiguration {
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 .oidc(Customizer.withDefaults());
 
-        http.oauth2ResourceServer(oauth2Rs -> oauth2Rs.jwt(Customizer.withDefaults()));
+        http.oauth2ResourceServer(oauth2RS -> oauth2RS.jwt(Customizer.withDefaults()));
 
         http.formLogin(configurer -> configurer.loginPage("/login"));
 
