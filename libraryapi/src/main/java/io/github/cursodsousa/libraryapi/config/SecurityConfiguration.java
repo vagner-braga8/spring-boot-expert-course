@@ -26,7 +26,6 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, LoginSocialSuccessHandler loginSocialSuccessHandler, JwtCustomAuthenticationFilter jwtCustomAuthenticationFilter) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                //.httpBasic(Customizer.withDefaults())
                 .formLogin(configurer -> {
                     configurer.loginPage("/login").permitAll();
                 })
